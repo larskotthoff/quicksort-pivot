@@ -9,6 +9,14 @@
 
 #define REPS 100
 
+#ifdef CHECK
+static int int_cmp(const void *a, const void *b) {
+    const int *ia = (const int *) a;
+    const int *ib = (const int *) b;
+    return *ia - *ib;
+}
+#endif
+
 void inssort(int a[], int left, int right) {
     int x;
     for(int i = left + 1; i <= right; i++) {
@@ -179,38 +187,23 @@ void quicksort_median9(int a[], int left, int right) {
 
     int pv = a[m];
 
-    int less  = left  + 1;
-    int great = right - 1;
-
-    for(int k = less; k <= great; k++) {
-        x = a[k];
-        if(x < pv) {
-            a[k] = a[less];
-            a[less++] = x;
-        } 
-        else if(x > pv) {
-            while(a[great] > pv && k < great) {
-                great--;
-            }
-            a[k] = a[great];
-            a[great--] = x;
-            x = a[k];
-            if(x < pv) {
-                a[k] = a[less];
-                a[less++] = x;
-            }
+    int less = left;
+    int great = right;
+    while(less <= great) {
+        while(a[less] < pv) less++;
+        while(a[great] > pv) great--;
+        if(less <= great) {
+            int tmp = a[less];
+            a[less] = a[great];
+            a[great] = tmp;
+            less++;
+            great--;
         }
     }
 
-    // swap
-    a[left] = a[less - 1];
-    a[less - 1] = pv;
-    a[right] = a[great + 1];
-    a[great + 1] = pv;
-
     // left and right parts
-    quicksort_median9(a, left,   less - 2);
-    quicksort_median9(a, great + 2, right);
+    quicksort_median9(a, left, great);
+    quicksort_median9(a, less, right);
 }
 
 void quicksort_median9_random(int a[], int left, int right) {
@@ -240,38 +233,23 @@ void quicksort_median9_random(int a[], int left, int right) {
 
     int pv = a[m];
 
-    int less  = left  + 1;
-    int great = right - 1;
-
-    for(int k = less; k <= great; k++) {
-        x = a[k];
-        if(x < pv) {
-            a[k] = a[less];
-            a[less++] = x;
-        } 
-        else if(x > pv) {
-            while(a[great] > pv && k < great) {
-                great--;
-            }
-            a[k] = a[great];
-            a[great--] = x;
-            x = a[k];
-            if(x < pv) {
-                a[k] = a[less];
-                a[less++] = x;
-            }
+    int less = left;
+    int great = right;
+    while(less <= great) {
+        while(a[less] < pv) less++;
+        while(a[great] > pv) great--;
+        if(less <= great) {
+            int tmp = a[less];
+            a[less] = a[great];
+            a[great] = tmp;
+            less++;
+            great--;
         }
     }
 
-    // swap
-    a[left] = a[less - 1];
-    a[less - 1] = pv;
-    a[right] = a[great + 1];
-    a[great + 1] = pv;
-
     // left and right parts
-    quicksort_median9_random(a, left,   less - 2);
-    quicksort_median9_random(a, great + 2, right);
+    quicksort_median9_random(a, left, great);
+    quicksort_median9_random(a, less, right);
 }
 
 void quicksort_median3_random(int a[], int left, int right) {
@@ -295,38 +273,23 @@ void quicksort_median3_random(int a[], int left, int right) {
 
     int pv = a[m];
 
-    int less  = left  + 1;
-    int great = right - 1;
-
-    for(int k = less; k <= great; k++) {
-        x = a[k];
-        if(x < pv) {
-            a[k] = a[less];
-            a[less++] = x;
-        } 
-        else if(x > pv) {
-            while(a[great] > pv && k < great) {
-                great--;
-            }
-            a[k] = a[great];
-            a[great--] = x;
-            x = a[k];
-            if(x < pv) {
-                a[k] = a[less];
-                a[less++] = x;
-            }
+    int less = left;
+    int great = right;
+    while(less <= great) {
+        while(a[less] < pv) less++;
+        while(a[great] > pv) great--;
+        if(less <= great) {
+            int tmp = a[less];
+            a[less] = a[great];
+            a[great] = tmp;
+            less++;
+            great--;
         }
     }
 
-    // swap
-    a[left] = a[less - 1];
-    a[less - 1] = pv;
-    a[right] = a[great + 1];
-    a[great + 1] = pv;
-
     // left and right parts
-    quicksort_median3_random(a, left,   less - 2);
-    quicksort_median3_random(a, great + 2, right);
+    quicksort_median3_random(a, left, great);
+    quicksort_median3_random(a, less, right);
 }
 
 void quicksort_median3(int a[], int left, int right) {
@@ -349,38 +312,23 @@ void quicksort_median3(int a[], int left, int right) {
 
     int pv = a[m];
 
-    int less  = left  + 1;
-    int great = right - 1;
-
-    for(int k = less; k <= great; k++) {
-        x = a[k];
-        if(x < pv) {
-            a[k] = a[less];
-            a[less++] = x;
-        } 
-        else if(x > pv) {
-            while(a[great] > pv && k < great) {
-                great--;
-            }
-            a[k] = a[great];
-            a[great--] = x;
-            x = a[k];
-            if(x < pv) {
-                a[k] = a[less];
-                a[less++] = x;
-            }
+    int less = left;
+    int great = right;
+    while(less <= great) {
+        while(a[less] < pv) less++;
+        while(a[great] > pv) great--;
+        if(less <= great) {
+            int tmp = a[less];
+            a[less] = a[great];
+            a[great] = tmp;
+            less++;
+            great--;
         }
     }
 
-    // swap
-    a[left] = a[less - 1];
-    a[less - 1] = pv;
-    a[right] = a[great + 1];
-    a[great + 1] = pv;
-
     // left and right parts
-    quicksort_median3(a, left,   less - 2);
-    quicksort_median3(a, great + 2, right);
+    quicksort_median3(a, left, great);
+    quicksort_median3(a, less, right);
 }
 
 // Sedgewick: take middle element
@@ -400,38 +348,23 @@ void quicksort_mid(int a[], int left, int right) {
 
     int pv = a[left + len / 2];
 
-    int less  = left  + 1;
-    int great = right - 1;
-
-    for(int k = less; k <= great; k++) {
-        x = a[k];
-        if(x < pv) {
-            a[k] = a[less];
-            a[less++] = x;
-        } 
-        else if(x > pv) {
-            while(a[great] > pv && k < great) {
-                great--;
-            }
-            a[k] = a[great];
-            a[great--] = x;
-            x = a[k];
-            if(x < pv) {
-                a[k] = a[less];
-                a[less++] = x;
-            }
+    int less = left;
+    int great = right;
+    while(less <= great) {
+        while(a[less] < pv) less++;
+        while(a[great] > pv) great--;
+        if(less <= great) {
+            int tmp = a[less];
+            a[less] = a[great];
+            a[great] = tmp;
+            less++;
+            great--;
         }
     }
 
-    // swap
-    a[left] = a[less - 1];
-    a[less - 1] = pv;
-    a[right] = a[great + 1];
-    a[great + 1] = pv;
-
     // left and right parts
-    quicksort_mid(a, left,   less - 2);
-    quicksort_mid(a, great + 2, right);
+    quicksort_mid(a, left, great);
+    quicksort_mid(a, less, right);
 }
 
 void quicksort_first(int a[], int left, int right) {
@@ -450,38 +383,23 @@ void quicksort_first(int a[], int left, int right) {
 
     int pv = a[left];
 
-    int less  = left  + 1;
-    int great = right - 1;
-
-    for(int k = less; k <= great; k++) {
-        x = a[k];
-        if(x < pv) {
-            a[k] = a[less];
-            a[less++] = x;
-        } 
-        else if(x > pv) {
-            while(a[great] > pv && k < great) {
-                great--;
-            }
-            a[k] = a[great];
-            a[great--] = x;
-            x = a[k];
-            if(x < pv) {
-                a[k] = a[less];
-                a[less++] = x;
-            }
+    int less = left;
+    int great = right;
+    while(less <= great) {
+        while(a[less] < pv) less++;
+        while(a[great] > pv) great--;
+        if(less <= great) {
+            int tmp = a[less];
+            a[less] = a[great];
+            a[great] = tmp;
+            less++;
+            great--;
         }
     }
 
-    // swap
-    a[left] = a[less - 1];
-    a[less - 1] = pv;
-    a[right] = a[great + 1];
-    a[great + 1] = pv;
-
     // left and right parts
-    quicksort_first(a, left,   less - 2);
-    quicksort_first(a, great + 2, right);
+    quicksort_first(a, left, great);
+    quicksort_first(a, less, right);
 }
 
 void quicksort_random(int a[], int left, int right) {
@@ -500,39 +418,26 @@ void quicksort_random(int a[], int left, int right) {
 
     int pv = a[(rand() % (right - left + 1)) + left];
 
-    int less  = left  + 1;
-    int great = right - 1;
-
-    for(int k = less; k <= great; k++) {
-        x = a[k];
-        if(x < pv) {
-            a[k] = a[less];
-            a[less++] = x;
-        } 
-        else if(x > pv) {
-            while(a[great] > pv && k < great) {
-                great--;
-            }
-            a[k] = a[great];
-            a[great--] = x;
-            x = a[k];
-            if(x < pv) {
-                a[k] = a[less];
-                a[less++] = x;
-            }
+    int less = left;
+    int great = right;
+    while(less <= great) {
+        while(a[less] < pv) less++;
+        while(a[great] > pv) great--;
+        if(less <= great) {
+            int tmp = a[less];
+            a[less] = a[great];
+            a[great] = tmp;
+            less++;
+            great--;
         }
     }
 
-    // swap
-    a[left] = a[less - 1];
-    a[less - 1] = pv;
-    a[right] = a[great + 1];
-    a[great + 1] = pv;
-
     // left and right parts
-    quicksort_random(a, left,   less - 2);
-    quicksort_random(a, great + 2, right);
+    quicksort_random(a, left, great);
+    quicksort_random(a, less, right);
 }
+
+typedef void (*f)(int *, int, int);
 
 int main(int argc, char* argv[]) {
     srand(0);
@@ -549,6 +454,9 @@ int main(int argc, char* argv[]) {
         fprintf(stderr, "File cannot be opened.\n");
         return EXIT_FAILURE;
     }
+
+    f funcs[9] = { inssort, quicksort_first, quicksort_random, quicksort_mid, quicksort_median3, quicksort_median3_random, quicksort_median9, quicksort_median9_random, quicksort_dualpivot };
+    char *labels[9] = { "insertion", "first", "random", "mid", "median 3", "median 3 random", "median 9", "median 9 random", "dual pivot" };
 
     char *line = NULL;
     int lineno = 0;
@@ -572,15 +480,15 @@ int main(int argc, char* argv[]) {
             }
             token = strtok_r(NULL, ",", &ptr);
         }
-        a = realloc(a, (length + 1) * sizeof(int));
+        a = realloc(a, (length) * sizeof(int));
         a[length] = INT_MAX;
 
-        int *b = calloc(length + 1, sizeof(int));
+        int *b = calloc(length, sizeof(int));
 
 #ifdef DEBUG
         printf("length: %d\n", length);
-        for(int i = 0; i <= length; i++) {
-            printf("%d, ", a[i]);
+        for(int i = 0; i < length; i++) {
+            printf("%d,", a[i]);
         }
         printf("\n");
 #endif
@@ -589,99 +497,37 @@ int main(int argc, char* argv[]) {
             struct tms t, tt;
             int timval;
 
-            times(&t);
-            for(int i = 0; i < REPS; i++) {
-                memcpy(b, a, length + 1);
-                inssort(b, 0, length - 1);
-            }
-            times(&tt);
-            timval = (tt.tms_utime - t.tms_utime) + (tt.tms_stime - t.tms_stime);
-            printf("insertion,%d,%i\n", lineno, timval);
-
-            times(&t);
-            for(int i = 0; i < REPS; i++) {
-                memcpy(b, a, length + 1);
-                quicksort_first(b, 0, length - 1);
-            }
-            times(&tt);
-            timval = (tt.tms_utime - t.tms_utime) + (tt.tms_stime - t.tms_stime);
-            printf("first,%d,%i\n", lineno, timval);
-
-            times(&t);
-            for(int i = 0; i < REPS; i++) {
-                memcpy(b, a, length + 1);
-                quicksort_random(b, 0, length - 1);
-            }
-            times(&tt);
-            timval = (tt.tms_utime - t.tms_utime) + (tt.tms_stime - t.tms_stime);
-            printf("random,%d,%i\n", lineno, timval);
-
-            times(&t);
-            for(int i = 0; i < REPS; i++) {
-                memcpy(b, a, length + 1);
-                quicksort_mid(b, 0, length - 1);
-            }
-            times(&tt);
-            timval = (tt.tms_utime - t.tms_utime) + (tt.tms_stime - t.tms_stime);
-            printf("mid,%d,%i\n", lineno, timval);
-
-            times(&t);
-            for(int i = 0; i < REPS; i++) {
-                memcpy(b, a, length + 1);
-                quicksort_median3(b, 0, length - 1);
-            }
-            times(&tt);
-            timval = (tt.tms_utime - t.tms_utime) + (tt.tms_stime - t.tms_stime);
-            printf("median 3,%d,%i\n", lineno, timval);
-
-            times(&t);
-            for(int i = 0; i < REPS; i++) {
-                memcpy(b, a, length + 1);
-                quicksort_median3_random(b, 0, length - 1);
-            }
-            times(&tt);
-            timval = (tt.tms_utime - t.tms_utime) + (tt.tms_stime - t.tms_stime);
-            printf("median 3 random,%d,%i\n", lineno, timval);
-
-            times(&t);
-            for(int i = 0; i < REPS; i++) {
-                memcpy(b, a, length + 1);
-                quicksort_median9(b, 0, length - 1);
-            }
-            times(&tt);
-            timval = (tt.tms_utime - t.tms_utime) + (tt.tms_stime - t.tms_stime);
-            printf("median 9,%d,%i\n", lineno, timval);
-
-            times(&t);
-            for(int i = 0; i < REPS; i++) {
-                memcpy(b, a, length + 1);
-                quicksort_median9_random(b, 0, length - 1);
-            }
-            times(&tt);
-            timval = (tt.tms_utime - t.tms_utime) + (tt.tms_stime - t.tms_stime);
-            printf("median 9 random,%d,%i\n", lineno, timval);
-
-            times(&t);
-            for(int i = 0; i < REPS; i++) {
-                memcpy(b, a, length + 1);
-                quicksort_dualpivot(b, 0, length - 1);
-            }
-            times(&tt);
-            timval = (tt.tms_utime - t.tms_utime) + (tt.tms_stime - t.tms_stime);
-            printf("dual pivot,%d,%i\n", lineno, timval);
-
-#ifdef DEBUG
-            for(int i = 0; i < length; i++) {
-                printf("%d, ", b[i]);
-            }
-            printf("\n");
-            for(int i = 1; i < length; i++) {
-                if(b[i] < b[i-1]) {
-                    fprintf(stderr, "Failed to sort line %d: %d before %d!\n", lineno, b[i-1], b[i]);
-                    return EXIT_FAILURE;
+            for(int j = 0; j < 9; j++) {
+                times(&t);
+                for(int i = 0; i < REPS; i++) {
+                    memcpy(b, a, length * sizeof(int));
+                    funcs[j](b, 0, length - 1);
                 }
-            }
+                times(&tt);
+                timval = (tt.tms_utime - t.tms_utime) + (tt.tms_stime - t.tms_stime);
+                printf("%s,%d,%i\n", labels[j], lineno, timval);
+
+#ifdef CHECK
+                int *c = calloc(length, sizeof(int));
+                memcpy(c, a, length * sizeof(int));
+                qsort(c, length, sizeof(int), int_cmp);
+                for(int i = 0; i < length; i++) {
+                    if(b[i] != c[i]) {
+                        fprintf(stderr, "Failed to sort in %s, pos %d:\nShould be ", labels[j], i);
+                        for(int i = 0; i < length; i++) {
+                            fprintf(stderr, "%d,", c[i]);
+                        }
+                        fprintf(stderr, "\nIs ");
+                        for(int i = 0; i < length; i++) {
+                            fprintf(stderr, "%d,", b[i]);
+                        }
+                        fprintf(stderr, "\n");
+                        return EXIT_FAILURE;
+                    }
+                }
+                free(c);
 #endif
+            }
         }
 
         free(a);
