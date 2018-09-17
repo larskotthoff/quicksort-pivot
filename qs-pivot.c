@@ -7,7 +7,7 @@
 
 #include <sys/times.h>
 
-#define REPS 100
+#define REPS 10
 
 #ifdef CHECK
 static int int_cmp(const void *a, const void *b) {
@@ -494,18 +494,15 @@ int main(int argc, char* argv[]) {
 #endif
 
         if(length > 0) {
-            struct tms t, tt;
-            int timval;
-
             for(int j = 0; j < 9; j++) {
-                times(&t);
+                clock_t begin = clock();
                 for(int i = 0; i < REPS; i++) {
                     memcpy(b, a, length * sizeof(int));
                     funcs[j](b, 0, length - 1);
                 }
-                times(&tt);
-                timval = (tt.tms_utime - t.tms_utime) + (tt.tms_stime - t.tms_stime);
-                printf("%s,%d,%i\n", labels[j], lineno, timval);
+                clock_t end = clock();
+                double tim = (double)(end - begin) / CLOCKS_PER_SEC;
+                printf("%s,%d,%.8f\n", labels[j], lineno, tim);
 
 #ifdef CHECK
                 int *c = calloc(length, sizeof(int));
